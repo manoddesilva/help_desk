@@ -1,0 +1,44 @@
+.top-bar{
+    background-color: #1F294A;
+    margin: 0%;
+    height: 150px;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    
+
+}
+
+.logo{
+    height: 150px;
+    width: 150px;
+    margin-left: 10px;
+    display: inline-block;
+   
+}
+
+
+
+#homeLoginButton{
+    display:inline-block;
+    position: absolute;
+    color: aliceblue;
+    text-decoration: underline;
+    text-underline-position: below;
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+    top: 3px;
+
+}
+
+#title{
+    color: aliceblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    align-self: center;
+    display: inline-block;
+    margin: auto;
+    position: absolute;
+    right: 550px;
+    
+}
