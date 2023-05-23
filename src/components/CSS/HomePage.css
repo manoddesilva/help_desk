@@ -1,8 +1,25 @@
-#back{
+.back{
     background-color:#B8BFCC;
     position: absolute;
     top: 0%;
     bottom: 0%;
     left: 0%;
     right: 0%;
+    
+}
+
+.search-bar{
+    position: absolute;
+    width: 274px;
+    height: 41px;
+    left: 82%;
+    top: 185px;
+}
+
+.tab-pane{
+    position: absolute;
+    width: 100%;
+    
+    
+    top: 185px;
 }
