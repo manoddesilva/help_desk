@@ -82,8 +82,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBar(props) {
-  const {handleChange} = props
-  //const [inputValue, setInputValue] = useState('');
+  const {handleChange } = props
+  const [inputValue, setInputValue] = useState('');
 
   // const handleChange = (event,inputValue) => {
   
@@ -106,7 +106,7 @@ export default function SearchBar(props) {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              //value={inputValue}
+              
               onChange={(e) => handleChange}
               // onChange={(e) => {handleChange}}
               
