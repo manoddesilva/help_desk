@@ -22,37 +22,44 @@ function createData(id, dessert, calories, fat, carbs, protein) {
 
 const columns = [
   {
-    width: 200,
-    label: "Dessert",
-    dataKey: "dessert",
+    width: 120,
+    label: "Raised By",
+    dataKey: "raisedBy",
   },
   {
     width: 120,
-    label: "Calories\u00A0(g)",
-    dataKey: "calories",
-    numeric: true,
+    label: "Department",
+    dataKey: "department",
+    
   },
   {
     width: 120,
-    label: "Fat\u00A0(g)",
-    dataKey: "fat",
-    numeric: true,
+    label: "Created Date",
+    dataKey: "ceatedDate",
+    
   },
   {
     width: 120,
-    label: "Carbs\u00A0(g)",
-    dataKey: "carbs",
-    numeric: true,
+    label: "Category",
+    dataKey: "category",
+   
   },
   {
     width: 120,
-    label: "Protein\u00A0(g)",
-    dataKey: "protein",
-    numeric: true,
+    label: "Status",
+    dataKey: "status",
+
   },
+  {
+    width: 80,
+    label: "",
+    dataKey: "buttons",
+
+  },
+
 ];
 
-const rows = Array.from({ length: 200 }, (_, index) => {
+const rows = Array.from({ length: 5 }, (_, index) => {
   const randomSelection = sample[Math.floor(Math.random() * sample.length)];
   return createData(index, ...randomSelection);
 });
@@ -102,7 +109,7 @@ function rowContent(_index, row) {
           key={column.dataKey}
           align={column.numeric || false ? "right" : "left"}
         >
-          {row[column.dataKey]}
+          {row[column.dataKey]}33
         </TableCell>
       ))}
     </React.Fragment>
@@ -121,3 +128,4 @@ export default function HomeTable() {
     </Paper>
   );
 }
+
