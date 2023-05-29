@@ -90,7 +90,7 @@ export default function HomeTable1() {
   return (
     <Paper sx={{ width: "100%", height: "400px", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 350 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table /*stickyHeader*/ aria-label="sticky table">
           <TableHead>
             {/* <TableRow>
               {columns.map((column) => (
