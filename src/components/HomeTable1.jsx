@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 import StatusButton from "./mini/StatusButton";
 import CategoryButton from "./mini/CategoryButton";
+import zIndex from "@mui/material/styles/zIndex";
 
 const columns = [
   { id: "taskId", label: "Task ID", minWidth: 100 },
@@ -62,11 +63,12 @@ const rows = [
   // createData('Brazil', 'BR', 210147125, 8515767),
 ];
 
-export default function HomeTable1() {
+const HomeTable1 = ({rows} ) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [categoryFilter, setCategoryFilter] = React.useState("All");
   const [statusFilter, setStatusFilter] = React.useState("All");
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -88,10 +90,10 @@ export default function HomeTable1() {
   };
 
   return (
-    <Paper sx={{ width: "100%", height: "400px", overflow: "hidden" }}>
+    <Paper sx={{ width: "100%", height: "400px", overflow: "hidden"  }} style={{zIndex:'-100'}}>
       <TableContainer sx={{ maxHeight: 350 }}>
         <Table /*stickyHeader*/ aria-label="sticky table">
-          <TableHead>
+          <TableHead >
             {/* <TableRow>
               {columns.map((column) => (
                 <TableCell
@@ -226,3 +228,4 @@ export default function HomeTable1() {
     </Paper>
   );
 }
+export default HomeTable1;

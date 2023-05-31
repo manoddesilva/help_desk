@@ -48,6 +48,25 @@ function a11yProps(index) {
   };
 }
 
+function createData(taskId, raisedBy, department, date, category, status) {
+  return { taskId, raisedBy, department, date, category, status };
+}
+
+const rowsCurrent = [
+  createData("23053001", "Silva", "Cutting", "2023/05/30", "other", "pending approval"),
+  createData("23053002", "shiran", "sampling", "2023/05/30", "part and machinery", "send to manager"),
+  createData("23053003", "shiran", "Cutting", "2023/05/30", "fabrication", "started"),
+  createData("23053004", "shiran", "Cutting", "2023/05/30", "furniture", "approved"),
+  createData("23053005", "shiran", "Cutting", "2023/05/30", "health and safety", "staff assigned"),
+  
+];
+
+const rowsPrevious = [
+  
+  createData("23053005", "shiran", "Cutting", "2023/05/30", "health and safety", "completed"),
+  
+];
+
 export default function HomeContent() {
   const [value, setValue] = React.useState(0);
 
@@ -63,9 +82,10 @@ export default function HomeContent() {
 
   return (
     <>
-    <Container style={{position:'absolute', zIndex:'999'}}>
-    <AddRequestUser isOpen={isOpen} setIsOpen={setIsOpen} ></AddRequestUser>
-    </Container>
+    
+    
+    <AddRequestUser isOpen={isOpen} setIsOpen={setIsOpen}></AddRequestUser>
+    
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
@@ -81,7 +101,7 @@ export default function HomeContent() {
       <TabPanel value={value} index={0}>
       
         <Row>
-          <HomeTable1 />
+          <HomeTable1 rows={rowsCurrent}/>
         </Row>
         <Row>
           <Button
@@ -102,7 +122,9 @@ export default function HomeContent() {
         </Row>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Previous Tasks
+        <Row>
+          <HomeTable1 rows={rowsPrevious}/>
+        </Row>
       </TabPanel>
       {/* <TabPanel value={value} index={2}>
         Item Three
