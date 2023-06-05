@@ -37,11 +37,36 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
   const [employeeNumber, setEmployeeNumber] = useState("");
   const [empNumberError, setEmpNumberError] = useState(false);
   const [empNumberHelperText, setEmpNumberHelperText] = useState("");
+  const [employeeName, setEmployeeName] = useState("");
+  const [empNameError, setEmpNameError] = useState(false);
+  const [empNameHelperText, setEmpNameHelperText] = useState("");
+  const [department, setDepartment] = useState("");
+  const [departmentError, setDepartmentError] = useState(false);
+  const [departmentHelperText, setDepartmentHelperText] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [emailHelperText, setemailHelperText] = useState("");
+  const [mobile, setMobilel] = useState("");
+  const [mobileError, setMobileErrorr] = useState(false);
+  const [mobileHelperText, setMobileHelperText] = useState("");
 
   const closeModal = () => {
     setIsOpen(false);
     setEmployeeNumber("");
     setEmpNumberError(false);
+    setEmpNumberHelperText("");
+    setEmployeeName("");
+    setEmpNameError(false);
+    setEmpNameHelperText("");
+    setDepartment("");
+    setDepartmentError(false);
+    setDepartmentHelperText("");
+    setEmail("");
+    setEmailError(false);
+    setemailHelperText("");
+    setMobilel("");
+    setMobileErrorr(false);
+    setMobileHelperText("");
   };
 
   const handleIdChange = (event) => {
@@ -64,6 +89,80 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
       // Perform any additional validation or submit the form here
     }
   };
+
+  
+
+   
+      
+      const handleNameChange = (event) => {
+      setEmployeeName(event.target.value);
+    }
+
+    const validateEmplyeeName = () => {
+      if (employeeName.length === 0) {
+        setEmpNameError(true);
+        setEmpNameHelperText("Name is required");
+      }  else {
+        setEmpNameError(false);
+        setEmpNameHelperText("");
+        // Perform any additional validation or submit the form here
+      }
+    };
+
+    const handleDepartmentChange = (event) => {
+      setDepartment(event.target.value);
+    }
+
+    const validateDepartment = () => {
+      if (department.length === 0) {
+        setDepartmentError(true);
+        setDepartmentHelperText("Department is required");
+      }  else {
+        setDepartmentError(false);
+        setDepartmentHelperText("");
+        // Perform any additional validation or submit the form here
+      }
+    };
+
+
+    const handleEmailChange = (event) => {
+      setEmail(event.target.value);
+    }
+
+    const validateEmail = () => {
+      if (email.length === 0) {
+        setEmailError(true);
+        setemailHelperText("E - Mail is required");
+      }  else {
+        setEmailError(false);
+        setemailHelperText("");
+        // Perform any additional validation or submit the form here
+      }
+    };
+
+    const handleMobileChange = (event) => {
+      setMobilel(event.target.value);
+    }
+
+    const validateMobile = () => {
+      if (mobile.length === 0) {
+        setMobileErrorr(true);
+        setMobileHelperText("Mobile number is required");
+      }  else if(mobile.length !== 10){
+        setMobileErrorr(true);
+        setMobileHelperText("Mobile number must be 10 digits");
+      } else if (!/^\d+$/.test(mobile)) {
+        setMobileErrorr(true);
+        setMobileHelperText("Mobile number must be digits only");
+      } else {
+        setMobileErrorr(false);
+        setMobileHelperText("");
+        // Perform any additional validation or submit the form here
+      }
+    };
+
+    
+  
 
   return (
     <div>
@@ -102,11 +201,11 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
               <Row style={{ height: "50%", padding: "1%" }}>
                 <Row style={{ fontWeight: "bold" }}>Personal Information</Row>
 
-                <Grid container spacing={2}>
-                  <Grid item xs={4} style={{display: "flex", alignItems: "center"}}>
+                <Grid container spacing={1} sx={{height:'95%'}}>
+                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
                     <item >Employee Number :</item>
                   </Grid>
-                  <Grid item xs={8}>  
+                  <Grid item xs={9}>  
                     <TextField 
                       hiddenLabel
                       id="filled-hidden-label-small"
@@ -121,6 +220,82 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       
                     />
                   </Grid>
+                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
+                    <item >Employee Name :</item>
+                  </Grid>
+                  <Grid item xs={9}>  
+                    <TextField 
+                      hiddenLabel
+                      id="filled-hidden-label-small"
+                      label="Employee Name"
+                      value={employeeName}
+                      onChange={handleNameChange}
+                      error={empNameError}
+                      helperText={empNameHelperText}
+                      variant="filled"
+
+                      size="small"
+                      
+                    />
+                  </Grid>
+
+                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
+                    <item >Department :</item>
+                  </Grid>
+                  <Grid item xs={9}>  
+                    <TextField 
+                      hiddenLabel
+                      id="filled-hidden-label-small"
+                      label="Department"
+                      value={department}
+                      onChange={handleDepartmentChange}
+                      error={departmentError}
+                      helperText={departmentHelperText}
+                      variant="filled"
+
+                      size="small"
+                      
+                    />
+                  </Grid>
+
+                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
+                    <item >e - mail :</item>
+                  </Grid>
+                  <Grid item xs={9}>  
+                    <TextField 
+                      hiddenLabel
+                      id="filled-hidden-label-small"
+                      label="E - mail"
+                      value={email}
+                      onChange={handleEmailChange}
+                      error={emailError}
+                      helperText={emailHelperText}
+                      variant="filled"
+
+                      size="small"
+                      
+                    />
+                  </Grid>
+
+                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
+                    <item >mobile no :</item>
+                  </Grid>
+                  <Grid item xs={9}>  
+                    <TextField 
+                      hiddenLabel
+                      id="filled-hidden-label-small"
+                      label="mobile no"
+                      value={mobile}
+                      onChange={handleMobileChange}
+                      error={mobileError}
+                      helperText={mobileHelperText}
+                      variant="filled"
+
+                      size="small"
+                      
+                    />
+                  </Grid>
+                  
                 </Grid>
 
                 {/* <Row style={{height:"20%"}} fluid>
@@ -143,7 +318,7 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                   </Col>
                 </Row> */}
 
-                <Row style={{height:"20%"}} fluid>  <Col sm="3">Employee Name :</Col></Row>
+                
               </Row>
 
               <Row style={{ height: "50%", padding: "1%" }}>sdf</Row>
@@ -175,7 +350,13 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                   marginTop: "1%",
                   backgroundColor: "#FB6340",
                 }}
-                onClick={validateEmplyeeNumber}
+                onClick={() => {
+                  validateEmplyeeNumber();
+                  validateEmplyeeName();
+                  validateDepartment();
+                  validateEmail();
+                  validateMobile();
+                }}
               >
                 ADD
               </Button>
