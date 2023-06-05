@@ -6,10 +6,8 @@ import { Button } from "@mui/material";
 import { Height } from "@mui/icons-material";
 import masla_logo from "../Assests/masla_logo.png";
 import TextField from "@mui/material/TextField";
-import Grid from '@mui/material/Unstable_Grid2';
-
-
-
+import Grid from "@mui/material/Unstable_Grid2";
+import CategoryDropdown from "./mini/CategoryDropdown";
 
 // Set the app element for accessibility
 Modal.setAppElement("#root");
@@ -49,6 +47,8 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
   const [mobile, setMobilel] = useState("");
   const [mobileError, setMobileErrorr] = useState(false);
   const [mobileHelperText, setMobileHelperText] = useState("");
+  const [modleVisibility, setModelVisibility] = useState(true);
+  const [machineModel, setMachineModel] = useState("");
 
   const closeModal = () => {
     setIsOpen(false);
@@ -90,79 +90,83 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
     }
   };
 
-  
+  const handleNameChange = (event) => {
+    setEmployeeName(event.target.value);
+  };
 
-   
-      
-      const handleNameChange = (event) => {
-      setEmployeeName(event.target.value);
+  const validateEmplyeeName = () => {
+    if (employeeName.length === 0) {
+      setEmpNameError(true);
+      setEmpNameHelperText("Name is required");
+    } else {
+      setEmpNameError(false);
+      setEmpNameHelperText("");
+      // Perform any additional validation or submit the form here
     }
+  };
 
-    const validateEmplyeeName = () => {
-      if (employeeName.length === 0) {
-        setEmpNameError(true);
-        setEmpNameHelperText("Name is required");
-      }  else {
-        setEmpNameError(false);
-        setEmpNameHelperText("");
-        // Perform any additional validation or submit the form here
-      }
-    };
+  const handleDepartmentChange = (event) => {
+    setDepartment(event.target.value);
+  };
 
-    const handleDepartmentChange = (event) => {
-      setDepartment(event.target.value);
+  const validateDepartment = () => {
+    if (department.length === 0) {
+      setDepartmentError(true);
+      setDepartmentHelperText("Department is required");
+    } else {
+      setDepartmentError(false);
+      setDepartmentHelperText("");
+      // Perform any additional validation or submit the form here
     }
+  };
 
-    const validateDepartment = () => {
-      if (department.length === 0) {
-        setDepartmentError(true);
-        setDepartmentHelperText("Department is required");
-      }  else {
-        setDepartmentError(false);
-        setDepartmentHelperText("");
-        // Perform any additional validation or submit the form here
-      }
-    };
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
 
-
-    const handleEmailChange = (event) => {
-      setEmail(event.target.value);
+  const validateEmail = () => {
+    if (email.length === 0) {
+      setEmailError(true);
+      setemailHelperText("E - Mail is required");
+    } else {
+      setEmailError(false);
+      setemailHelperText("");
+      // Perform any additional validation or submit the form here
     }
+  };
 
-    const validateEmail = () => {
-      if (email.length === 0) {
-        setEmailError(true);
-        setemailHelperText("E - Mail is required");
-      }  else {
-        setEmailError(false);
-        setemailHelperText("");
-        // Perform any additional validation or submit the form here
-      }
-    };
+  const handleMobileChange = (event) => {
+    setMobilel(event.target.value);
+  };
 
-    const handleMobileChange = (event) => {
-      setMobilel(event.target.value);
+  const validateMobile = () => {
+    if (mobile.length === 0) {
+      setMobileErrorr(true);
+      setMobileHelperText("Mobile number is required");
+    } else if (mobile.length !== 10) {
+      setMobileErrorr(true);
+      setMobileHelperText("Mobile number must be 10 digits");
+    } else if (!/^\d+$/.test(mobile)) {
+      setMobileErrorr(true);
+      setMobileHelperText("Mobile number must be digits only");
+    } else {
+      setMobileErrorr(false);
+      setMobileHelperText("");
+      // Perform any additional validation or submit the form here
     }
+  };
 
-    const validateMobile = () => {
-      if (mobile.length === 0) {
-        setMobileErrorr(true);
-        setMobileHelperText("Mobile number is required");
-      }  else if(mobile.length !== 10){
-        setMobileErrorr(true);
-        setMobileHelperText("Mobile number must be 10 digits");
-      } else if (!/^\d+$/.test(mobile)) {
-        setMobileErrorr(true);
-        setMobileHelperText("Mobile number must be digits only");
-      } else {
-        setMobileErrorr(false);
-        setMobileHelperText("");
-        // Perform any additional validation or submit the form here
-      }
-    };
+  const handleCategoryChange = (selectedOption) => {
+    if (selectedOption === "part_and_machinery") {
+      setModelVisibility(false);
+    } else {
+      setModelVisibility(true);
+    }
+  };
 
-    
-  
+  const handleMachineModelChange = (event) => {
+    setMachineModel(event.target.value);
+  };
 
   return (
     <div>
@@ -201,12 +205,16 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
               <Row style={{ height: "50%", padding: "1%" }}>
                 <Row style={{ fontWeight: "bold" }}>Personal Information</Row>
 
-                <Grid container spacing={1} sx={{height:'95%'}}>
-                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
-                    <item >Employee Number :</item>
+                <Grid container spacing={1} sx={{ height: "95%" }}>
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <item>Employee No :</item>
                   </Grid>
-                  <Grid item xs={9}>  
-                    <TextField 
+                  <Grid item xs={4}>
+                    <TextField
                       hiddenLabel
                       id="filled-hidden-label-small"
                       label="Employee Number"
@@ -215,16 +223,18 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       error={empNumberError}
                       helperText={empNumberHelperText}
                       variant="filled"
-
                       size="small"
-                      
                     />
                   </Grid>
-                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
-                    <item >Employee Name :</item>
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <item>Employee Name :</item>
                   </Grid>
-                  <Grid item xs={9}>  
-                    <TextField 
+                  <Grid item xs={4}>
+                    <TextField
                       hiddenLabel
                       id="filled-hidden-label-small"
                       label="Employee Name"
@@ -233,17 +243,19 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       error={empNameError}
                       helperText={empNameHelperText}
                       variant="filled"
-
                       size="small"
-                      
                     />
                   </Grid>
 
-                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
-                    <item >Department :</item>
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <item>Department :</item>
                   </Grid>
-                  <Grid item xs={9}>  
-                    <TextField 
+                  <Grid item xs={4}>
+                    <TextField
                       hiddenLabel
                       id="filled-hidden-label-small"
                       label="Department"
@@ -252,17 +264,19 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       error={departmentError}
                       helperText={departmentHelperText}
                       variant="filled"
-
                       size="small"
-                      
                     />
                   </Grid>
 
-                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
-                    <item >e - mail :</item>
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <item>e - mail :</item>
                   </Grid>
-                  <Grid item xs={9}>  
-                    <TextField 
+                  <Grid item xs={4}>
+                    <TextField
                       hiddenLabel
                       id="filled-hidden-label-small"
                       label="E - mail"
@@ -271,17 +285,19 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       error={emailError}
                       helperText={emailHelperText}
                       variant="filled"
-
                       size="small"
-                      
                     />
                   </Grid>
 
-                  <Grid item xs={3} style={{display: "flex", alignItems: "center"}}>
-                    <item >mobile no :</item>
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <item>mobile no :</item>
                   </Grid>
-                  <Grid item xs={9}>  
-                    <TextField 
+                  <Grid item xs={4}>
+                    <TextField
                       hiddenLabel
                       id="filled-hidden-label-small"
                       label="mobile no"
@@ -290,12 +306,9 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       error={mobileError}
                       helperText={mobileHelperText}
                       variant="filled"
-
                       size="small"
-                      
                     />
                   </Grid>
-                  
                 </Grid>
 
                 {/* <Row style={{height:"20%"}} fluid>
@@ -317,11 +330,69 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                     />
                   </Col>
                 </Row> */}
-
-                
               </Row>
 
-              <Row style={{ height: "50%", padding: "1%" }}>sdf</Row>
+              <Row style={{ height: "50%", padding: "1%" }}>
+                <Row style={{ fontWeight: "bold" }}>Request Detail</Row>
+
+                <Grid container spacing={1}>
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <item>category :</item>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <CategoryDropdown
+                      label="Category"
+                      onOptionChange={handleCategoryChange}
+                    />
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <item>Machine Model :</item>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField
+                      hiddenLabel
+                      disabled={modleVisibility}
+                      id="filled-hidden-label-small"
+                      label="Machine Model"
+                      value={machineModel}
+                      onChange={handleMachineModelChange}
+                      variant="filled"
+                      size="small"
+                    />
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <item>Description :</item>
+                  </Grid>
+                  <Grid item xs={10}>
+                    <TextField
+                      hiddenLabel
+                      id="filled-hidden-label-small"
+                      label="Description"
+                      value={machineModel}
+                      onChange={handleMachineModelChange}
+                      variant="filled"
+                      size="small"
+                      multiline
+                      rows={2}
+                      fullWidth
+                    />
+                  </Grid>
+                </Grid>
+              </Row>
             </Container>
           </Row>
 
