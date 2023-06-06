@@ -22,16 +22,6 @@ const customModalStyles = {
 };
 
 const AddRequestUser = ({ isOpen, setIsOpen }) => {
-  //   const [isOpen, setIsOpen] = useState(false);
-
-  //   const openModal = () => {
-  //     setIsOpen(true);
-  //   };
-
-  //   const closeModal = () => {
-  //     setIsOpen(false);
-  //   };
-
   const [employeeNumber, setEmployeeNumber] = useState("");
   const [empNumberError, setEmpNumberError] = useState(false);
   const [empNumberHelperText, setEmpNumberHelperText] = useState("");
@@ -49,6 +39,7 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
   const [mobileHelperText, setMobileHelperText] = useState("");
   const [modleVisibility, setModelVisibility] = useState(true);
   const [machineModel, setMachineModel] = useState("");
+  const [description, setDescription] = useState("");
 
   const closeModal = () => {
     setIsOpen(false);
@@ -67,20 +58,23 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
     setMobilel("");
     setMobileErrorr(false);
     setMobileHelperText("");
+    setDescription("");
   };
 
   const handleIdChange = (event) => {
-    setEmployeeNumber(event.target.value);
+    const inputValue = event.target.value;
+    setEmployeeNumber(inputValue);
+    validateEmplyeeNumber(inputValue);
   };
 
-  const validateEmplyeeNumber = () => {
-    if (employeeNumber.length === 0) {
+  const validateEmplyeeNumber = (value) => {
+    if (value.length === 0) {
       setEmpNumberError(true);
       setEmpNumberHelperText("ID is required");
-    } else if (employeeNumber.length !== 5) {
+    } else if (value.length !== 5) {
       setEmpNumberError(true);
       setEmpNumberHelperText("ID must be 5 digits");
-    } else if (!/^\d+$/.test(employeeNumber)) {
+    } else if (!/^\d+$/.test(value)) {
       setEmpNumberError(true);
       setEmpNumberHelperText("ID must be digits only");
     } else {
@@ -91,11 +85,13 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
   };
 
   const handleNameChange = (event) => {
-    setEmployeeName(event.target.value);
+    const inputValue = event.target.value;
+    setEmployeeName(inputValue);
+    validateEmplyeeName(inputValue);
   };
 
-  const validateEmplyeeName = () => {
-    if (employeeName.length === 0) {
+  const validateEmplyeeName = (value) => {
+    if (value.length === 0) {
       setEmpNameError(true);
       setEmpNameHelperText("Name is required");
     } else {
@@ -106,11 +102,13 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
   };
 
   const handleDepartmentChange = (event) => {
-    setDepartment(event.target.value);
+    const inputValue = event.target.value;
+    setDepartment(inputValue);
+    validateDepartment(inputValue);
   };
 
-  const validateDepartment = () => {
-    if (department.length === 0) {
+  const validateDepartment = (value) => {
+    if (value.length === 0) {
       setDepartmentError(true);
       setDepartmentHelperText("Department is required");
     } else {
@@ -121,13 +119,19 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
   };
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    const inputValue = event.target.value;
+    setEmail(inputValue);
+    validateEmail(inputValue);
   };
 
-  const validateEmail = () => {
-    if (email.length === 0) {
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (value.length === 0) {
       setEmailError(true);
       setemailHelperText("E - Mail is required");
+    } else if (!emailRegex.test(value)) {
+      setEmailError(true);
+      setemailHelperText("Invalid email format");
     } else {
       setEmailError(false);
       setemailHelperText("");
@@ -136,17 +140,19 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
   };
 
   const handleMobileChange = (event) => {
-    setMobilel(event.target.value);
+    const inputValue = event.target.value;
+    setMobilel(inputValue);
+    validateMobile(inputValue);
   };
 
-  const validateMobile = () => {
-    if (mobile.length === 0) {
+  const validateMobile = (value) => {
+    if (value.length === 0) {
       setMobileErrorr(true);
       setMobileHelperText("Mobile number is required");
-    } else if (mobile.length !== 10) {
+    } else if (value.length !== 10) {
       setMobileErrorr(true);
       setMobileHelperText("Mobile number must be 10 digits");
-    } else if (!/^\d+$/.test(mobile)) {
+    } else if (!/^\d+$/.test(value)) {
       setMobileErrorr(true);
       setMobileHelperText("Mobile number must be digits only");
     } else {
@@ -166,6 +172,10 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
 
   const handleMachineModelChange = (event) => {
     setMachineModel(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
   };
 
   return (
@@ -219,6 +229,7 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       id="filled-hidden-label-small"
                       label="Employee Number"
                       value={employeeNumber}
+                      onFocus={handleIdChange}
                       onChange={handleIdChange}
                       error={empNumberError}
                       helperText={empNumberHelperText}
@@ -239,6 +250,7 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       id="filled-hidden-label-small"
                       label="Employee Name"
                       value={employeeName}
+                      onFocus={handleNameChange}
                       onChange={handleNameChange}
                       error={empNameError}
                       helperText={empNameHelperText}
@@ -260,6 +272,7 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       id="filled-hidden-label-small"
                       label="Department"
                       value={department}
+                      onFocus={handleDepartmentChange}
                       onChange={handleDepartmentChange}
                       error={departmentError}
                       helperText={departmentHelperText}
@@ -281,6 +294,7 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       id="filled-hidden-label-small"
                       label="E - mail"
                       value={email}
+                      onFocus={handleEmailChange}
                       onChange={handleEmailChange}
                       error={emailError}
                       helperText={emailHelperText}
@@ -302,6 +316,7 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       id="filled-hidden-label-small"
                       label="mobile no"
                       value={mobile}
+                      onFocus={handleMobileChange}
                       onChange={handleMobileChange}
                       error={mobileError}
                       helperText={mobileHelperText}
@@ -310,26 +325,6 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                     />
                   </Grid>
                 </Grid>
-
-                {/* <Row style={{height:"20%"}} fluid>
-                  <Col>Employee Number :</Col>
-                  <Col sm="9">
-                    <TextField
-
-                      hiddenLabel
-                      id="filled-hidden-label-small"
-                      label="Employee Number"
-                      value={employeeNumber}
-                      onChange={handleIdChange}
-                      error={empNumberError}
-                      helperText={empNumberHelperText}
-                      variant="filled"
-
-                      size="small"
-                      
-                    />
-                  </Col>
-                </Row> */}
               </Row>
 
               <Row style={{ height: "50%", padding: "1%" }}>
@@ -382,8 +377,8 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                       hiddenLabel
                       id="filled-hidden-label-small"
                       label="Description"
-                      value={machineModel}
-                      onChange={handleMachineModelChange}
+                      value={description}
+                      onChange={handleDescriptionChange}
                       variant="filled"
                       size="small"
                       multiline
@@ -422,11 +417,15 @@ const AddRequestUser = ({ isOpen, setIsOpen }) => {
                   backgroundColor: "#FB6340",
                 }}
                 onClick={() => {
-                  validateEmplyeeNumber();
-                  validateEmplyeeName();
-                  validateDepartment();
-                  validateEmail();
-                  validateMobile();
+                  if (
+                    !empNumberError &&
+                    !empNameError &&
+                    !departmentError &&
+                    !emailError &&
+                    !mobileError
+                  ) {
+                    closeModal();
+                  }
                 }}
               >
                 ADD
