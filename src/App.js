@@ -1,17 +1,15 @@
+import "./App.css";
+import AddRequestUser from "./components/AddRequestUser";
 
-import './App.css';
-import AddRequestUser from './components/AddRequestUser';
-
-import { Home } from './view/Home';
+import { Home } from "./view/Home";
 
 function App() {
-  return(
+  return (
     <div>
       <Home />
       {/* <AddRequestUser></AddRequestUser> */}
     </div>
-   
-  )
+  );
 }
 
 export default App;

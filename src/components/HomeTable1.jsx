@@ -10,7 +10,9 @@ import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 import StatusButton from "./mini/StatusButton";
 import CategoryButton from "./mini/CategoryButton";
-import zIndex from "@mui/material/styles/zIndex";
+
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const columns = [
   { id: "taskId", label: "Task ID", minWidth: 100 },
@@ -47,15 +49,15 @@ function createData(taskId, raisedBy, department, date, category, status) {
 
 const rows = [
   createData("India", "IN", 1324171354, 3287263, "other", "pending approval"),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
+  createData("China", "CN", 1403500365, 9596961),
+  createData("Italy", "IT", 60483973, 301340),
+  createData("United States", "US", 327167434, 9833520),
+  createData("Canada", "CA", 37602103, 9984670),
+  createData("Australia", "AU", 25475400, 7692024),
+  createData("Germany", "DE", 83019200, 357578),
+  createData("Ireland", "IE", 4857000, 70273),
+  createData("Mexico", "MX", 126577691, 1972550),
+  createData("Japan", "JP", 126317000, 377973),
   // createData('France', 'FR', 67022000, 640679),
   // createData('United Kingdom', 'GB', 67545757, 242495),
   // createData('Russia', 'RU', 146793744, 17098246),
@@ -63,12 +65,11 @@ const rows = [
   // createData('Brazil', 'BR', 210147125, 8515767),
 ];
 
-const HomeTable1 = ({rows} ) => {
+const HomeTable1 = ({ rows }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [categoryFilter, setCategoryFilter] = React.useState("All");
   const [statusFilter, setStatusFilter] = React.useState("All");
-  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -90,10 +91,13 @@ const HomeTable1 = ({rows} ) => {
   };
 
   return (
-    <Paper sx={{ width: "100%", height: "400px", overflow: "hidden"  }} style={{zIndex:'-100'}}>
+    <Paper
+      sx={{ width: "100%", height: "400px", overflow: "hidden" }}
+      style={{ zIndex: "-100" }}
+    >
       <TableContainer sx={{ maxHeight: 350 }}>
         <Table /*stickyHeader*/ aria-label="sticky table">
-          <TableHead >
+          <TableHead>
             {/* <TableRow>
               {columns.map((column) => (
                 <TableCell
@@ -108,31 +112,43 @@ const HomeTable1 = ({rows} ) => {
             </TableRow> */}
             <TableRow>
               {columns.map((column) => (
-                <TableCell key={column.id} 
-                align={column.align}
-                style={{ minWidth: column.minWidth, fontWeight: "bold" }}>
-                  
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth, fontWeight: "bold" }}
+                >
                   {column.id === "category" ? (
                     <select
                       value={categoryFilter}
                       onChange={handleChangeCategoryFilter}
-                      style={{ width: "100%", fontWeight: "bold", alignItems:"center" }}
+                      style={{
+                        width: "100%",
+                        fontWeight: "bold",
+                        alignItems: "center",
+                      }}
                     >
                       <option value="All">Category</option>
-                      <option value="part and machinery">Part & Machinery</option>
+                      <option value="part and machinery">
+                        Part & Machinery
+                      </option>
                       <option value="building">Building</option>
                       <option value="fabrication">Fabrication</option>
-                      <option value="health and safety">Health and Safety</option>
+                      <option value="health and safety">
+                        Health and Safety
+                      </option>
                       <option value="furniture">Furniture</option>
                       <option value="other">Other</option>
                       {/* Add more options based on your categories */}
                     </select>
-                  ) :
-                  column.id === "status" ? (
+                  ) : column.id === "status" ? (
                     <select
                       value={statusFilter}
                       onChange={handleChangeStatusFilter}
-                      style={{ width: "100%", fontWeight: "bold", alignItems:"center" }}
+                      style={{
+                        width: "100%",
+                        fontWeight: "bold",
+                        alignItems: "center",
+                      }}
                     >
                       <option value="All">Status</option>
                       <option value="pending">Pending </option>
@@ -145,8 +161,7 @@ const HomeTable1 = ({rows} ) => {
                       <option value="started">Started</option>
                       {/* Add more options based on your categories */}
                     </select>
-                  ) :
-                  (
+                  ) : (
                     column.label
                   )}
                 </TableCell>
@@ -162,8 +177,7 @@ const HomeTable1 = ({rows} ) => {
                   categoryFilter === "All" || row.category === categoryFilter
               )
               .filter(
-                (row) =>
-                  statusFilter === "All" || row.status === statusFilter
+                (row) => statusFilter === "All" || row.status === statusFilter
               )
               .map((row) => {
                 return (
@@ -227,5 +241,5 @@ const HomeTable1 = ({rows} ) => {
       />
     </Paper>
   );
-}
+};
 export default HomeTable1;
