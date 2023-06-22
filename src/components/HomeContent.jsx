@@ -84,6 +84,8 @@ export default function HomeContent() {
   const [value, setValue] = React.useState(0);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [currentTaskList, setCurrentTaskList] = useState([]);
+  const [previousTaskList, setPreviousTaskList] = useState([]);
 
   const openPopup = () => {
     setIsOpen(true);
@@ -93,14 +95,22 @@ export default function HomeContent() {
     setValue(Value);
   };
 
-  const [currentTaskList, setCurrentTaskList] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/requests/current`)
+      .then((response) => {
+        setCurrentTaskList(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/requests`)
+      .get(`http://localhost:3001/requests/previous`)
       .then((response) => {
-        console.log(response.data);
-        setCurrentTaskList(response.data);
+        setPreviousTaskList(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -121,17 +131,16 @@ export default function HomeContent() {
       value.Status.toString()
     );
   });
-  const rowsPrevious = [
-    createData(
-      "23053005",
-      "shiran",
-      "Cutting",
-      "2023/05/30",
-      "health and safety",
-      "completed"
-    ),
-  ];
-  console.log("Current" + currentTaskList);
+  const rowsPrevious = previousTaskList.map((value, key) => {
+    return createData(
+      value.RequestId.toString(),
+      value.userTableEmployeeId.toString(),
+      value.Department.toString(),
+      value.CreatedDate.toString(),
+      value.Category.toString(),
+      value.Status.toString()
+    );
+  });
 
   return (
     <>
